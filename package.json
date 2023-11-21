@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-ww-auth",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "type": "module",
   "description": "企业微信鉴权vitejs插件",
   "main": "dist/vite-plugin-ww-auth.cjs",
@@ -28,7 +28,9 @@
   "author": "wuwhs",
   "license": "ISC",
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "src"
   ],
   "dependencies": {
     "axios": "^1.6.2",
