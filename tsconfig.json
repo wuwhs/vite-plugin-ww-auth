@@ -8,7 +8,10 @@
     "strictNullChecks": true,
     "esModuleInterop": true,
     "typeRoots": ["src/types"],
-    "types": ["sha1"]
+    "baseUrl": "./",
+    "paths": {
+      "sha1": ["src/types/sha1.d.ts"]
+    },
   },
   "include": [
     "src",
