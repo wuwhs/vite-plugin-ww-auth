@@ -39,14 +39,14 @@ export default defineConfig(({ mode }) => {
   };
 });
 ```
-页面加载时，即可从`window.__authInfo__`获取企业微信SDK鉴权所需信息。
+页面加载时，即可从`window.__wwAuthInfo__`获取企业微信SDK鉴权所需信息。
 
 ```ts
-const authInfo = window.__authInfo__;
+const wwAuthInfo = window.__wwAuthInfo__;
 
 // 通过agentConfig注入应用的权限
 const setUpAgentConfig = () => {
-  const { corpid, agentid, timestamp, noncestr, appsign } = authInfo;
+  const { corpid, agentid, timestamp, noncestr, appsign } = wwAuthInfo;
   return new Promise((resolve, reject) => {
     wx.agentConfig({
       corpid, // 必填，企业微信的corpid，必须与当前登录的企业一致
@@ -81,8 +81,8 @@ const setUpAgentConfig = () => {
 
 // 初始化企业微信鉴权
 export const initSdk = async () => {
-  const { noncestr, timestamp, corpid, corpsign } = authInfo;
-  console.log('authInfo: ', window.__authInfo__);
+  const { noncestr, timestamp, corpid, corpsign } = wwAuthInfo;
+  console.log('wwAuthInfo: ', window.__wwAuthInfo__);
 
   return new Promise((resolve, reject) => {
     wx.config({
