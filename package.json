@@ -1,11 +1,11 @@
 {
   "name": "vite-plugin-ww-auth",
-  "version": "0.1.6",
+  "version": "0.2.10",
   "type": "module",
   "description": "企业微信鉴权vitejs插件",
   "main": "dist/vite-plugin-ww-auth.cjs",
   "module": "dist/vite-plugin-ww-auth.mjs",
-  "types": "dist/index.d.ts",
+  "types": "types/index.d.ts",
   "exports": {
     ".": {
       "require": "./dist/vite-plugin-ww-auth.cjs",
@@ -30,6 +30,7 @@
   "files": [
     "dist",
     "README.md",
+    "types",
     "src"
   ],
   "dependencies": {

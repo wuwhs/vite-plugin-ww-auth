@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "dist",
     "noImplicitAny": true,
     "strict": true,
     "noImplicitThis": true,
@@ -7,14 +9,14 @@
     "allowJs": true,
     "strictNullChecks": true,
     "esModuleInterop": true,
-    "typeRoots": ["src/types"],
+    "typeRoots": ["types"],
     "baseUrl": "./",
     "paths": {
-      "sha1": ["src/types/sha1.d.ts"]
+      "sha1": ["types/sha1.d.ts"]
     },
   },
   "include": [
-    "src",
+    "src/**/*", "types",
   ],
   "exclude": ["./node_modules/**"],
   "extends": "@tsconfig/recommended/tsconfig.json"

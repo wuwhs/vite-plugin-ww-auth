@@ -2,32 +2,21 @@
 import { Plugin } from "vite";
 import sha1 from "sha1";
 import axios from "axios";
-
-interface WwAuthPluginOptions {
-  corpid: string;
-  corpsecret: string;
-  noncestr: string;
-  timestamp: number;
-  url: string;
-  agentid: number;
-}
-
-interface AuthInfo {
-  corpsign: string;
-  appsign: string;
-  corpid: string;
-  corpsecret: string;
-  noncestr: string;
-  timestamp: number;
-  url: string;
-  agentid: number;
-}
-
+import type { WwAuthPluginOptions, WwAuthInfo } from 'vite-plugin-ww-auth'; 
 
 const WwAuthPlugin = function (options: WwAuthPluginOptions): Plugin {
   const { corpid, corpsecret, noncestr, timestamp, url, agentid } = options;
 
-  let authInfo = {};
+  let wwAuthInfo: WwAuthInfo = {
+    corpsign: "",
+    appsign: "",
+    corpid: "",
+    corpsecret: "",
+    noncestr: "",
+    timestamp: "",
+    url: "",
+    agentid: ""
+  };
 
   // 获取token
   const getAccessToken = async () => {
@@ -64,7 +53,6 @@ const WwAuthPlugin = function (options: WwAuthPluginOptions): Plugin {
   // 加密ticket
   const encrypTicket = (ticket: string) => {
     const str = `jsapi_ticket=${ticket}&noncestr=${noncestr}&timestamp=${timestamp}&url=${url}`;
-    console.log("concat jsapi_ticket: ", str);
     return sha1(str);
   };
   // 加载标志，只加载一次
@@ -77,7 +65,6 @@ const WwAuthPlugin = function (options: WwAuthPluginOptions): Plugin {
         if (!flag) {
           try {
             const tokenResult = await getAccessToken();
-            console.log("tokenResult: ", tokenResult.data);
 
             if (tokenResult.data.errcode !== 0) {
               console.log("获取token失败：", JSON.stringify(tokenResult.data));
@@ -108,7 +95,7 @@ const WwAuthPlugin = function (options: WwAuthPluginOptions): Plugin {
               );
             }
 
-            authInfo = {
+            wwAuthInfo = {
               corpsign: encrypTicket(corpResult.data.ticket),
               appsign: encrypTicket(appResult.data.ticket),
               corpid,
@@ -118,9 +105,8 @@ const WwAuthPlugin = function (options: WwAuthPluginOptions): Plugin {
               url,
               agentid,
             };
-            console.log(JSON.stringify(authInfo));
             flag = true;
-          } catch (error:any) {
+          } catch (error: any) {
             console.log("企业微信鉴权错误:", error.message);
             flag = false;
           }
@@ -132,8 +118,8 @@ const WwAuthPlugin = function (options: WwAuthPluginOptions): Plugin {
       // 在 HTML 中注入获取到的 token
       return html.replace(
         "</head>",
-        `<script>window.__authInfo__ = ${JSON.stringify(
-          authInfo
+        `<script>window.__wwAuthInfo__ = ${JSON.stringify(
+          wwAuthInfo
         )};</script></head>`
       );
     },
