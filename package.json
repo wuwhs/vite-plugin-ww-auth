@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-ww-auth",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "type": "module",
   "description": "企业微信鉴权vitejs插件",
   "main": "dist/vite-plugin-ww-auth.cjs",

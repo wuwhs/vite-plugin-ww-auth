@@ -64,12 +64,11 @@ const setUpAgentConfig = () => {
         "chooseImage",
         "getContext"
       ], //必填，传入需要使用的接口名称
-      success: res => {
+      success: (res) => {
         // 回调
-        console.log("agentConfig: ", res);
         resolve(res);
       },
-      fail: res => {
+      fail: (res) => {
         if (res.errMsg.indexOf("function not exist") > -1) {
           console.error("版本过低请升级");
         }
@@ -82,7 +81,6 @@ const setUpAgentConfig = () => {
 // 初始化企业微信鉴权
 export const initSdk = async () => {
   const { noncestr, timestamp, corpid, corpsign } = wwAuthInfo;
-  console.log('wwAuthInfo: ', window.__wwAuthInfo__);
 
   return new Promise((resolve, reject) => {
     wx.config({
@@ -105,7 +103,7 @@ export const initSdk = async () => {
       }
     });
 
-    wx.error(err => {
+    wx.error((err) => {
       // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
       console.log("wx.error: ", err);
       reject(err);
